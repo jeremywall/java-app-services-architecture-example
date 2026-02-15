@@ -1,0 +1,501 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>dev.jeremywall</groupId>
+    <artifactId>java-app-services-architecture-example</artifactId>
+    <version>1.0</version>
+    <packaging>jar</packaging>
+
+    <name>Java App Services Architecture Example</name>
+
+    <description>${project.name}</description>
+
+    <url></url>
+
+    <organization>
+        <name></name>
+        <url></url>
+    </organization>
+
+    <issueManagement>
+        <url>https://github.com/jeremywall/java-app-services-architecture-example/issues</url>
+    </issueManagement>
+
+    <scm>
+        <connection></connection>
+        <developerConnection></developerConnection>
+        <url></url>
+    </scm>
+
+    <properties>
+        <!-- since java 5 the 1.x prefix is not required -->
+        <java.jdk.version>21</java.jdk.version>
+        <!-- in java 9+ the release flag for javac can be used in lieu of the old source and target flags -->
+        <java.release.version>21</java.release.version>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <final.name>${project.artifactId}</final.name>
+
+        <!-- keep these dependencies alphabetized -->
+        <apache.commons.io.version>2.21.0</apache.commons.io.version>
+        <duckdb.version>1.4.4.0</duckdb.version>
+        <hikaricp.version>7.0.2</hikaricp.version>
+        <guava.version>33.5.0-jre</guava.version>
+        <javax.validation.version>2.0.1.Final</javax.validation.version>
+        <jdbi.version>3.51.0</jdbi.version>
+        <jnr.version>3.1.21</jnr.version>
+        <json.org.version>20251224</json.org.version>
+        <junit.jupiter.version>6.0.2</junit.jupiter.version>
+        <log4j2.version>2.25.3</log4j2.version>
+        <lombok.version>1.18.42</lombok.version>
+        <picocli.verion>4.7.7</picocli.verion>
+        <slf4j.version>2.0.17</slf4j.version>
+        <snakeyaml.version>2.5</snakeyaml.version>
+        <toothpick.version>3.1.0</toothpick.version>
+        <!-- keep these dependencies alphabetized -->
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.jdbi</groupId>
+                <artifactId>jdbi3-bom</artifactId>
+                <type>pom</type>
+                <version>${jdbi.version}</version>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-1.2-api</artifactId>
+            <version>${log4j2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>${log4j2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>info.picocli</groupId>
+            <artifactId>picocli</artifactId>
+            <version>${picocli.verion}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>${snakeyaml.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${apache.commons.io.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>${javax.validation.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>${json.org.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.stephanenicolas.toothpick</groupId>
+            <artifactId>toothpick-runtime</artifactId>
+            <version>${toothpick.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>${hikaricp.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jdbi</groupId>
+            <artifactId>jdbi3-core</artifactId>
+            <!-- version from the jdbi bom -->
+        </dependency>
+        <dependency>
+            <groupId>org.jdbi</groupId>
+            <artifactId>jdbi3-sqlobject</artifactId>
+            <!-- version from the jdbi bom -->
+        </dependency>
+        <dependency>
+            <groupId>org.duckdb</groupId>
+            <artifactId>duckdb_jdbc</artifactId>
+            <version>${duckdb.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.jnr</groupId>
+            <artifactId>jnr-posix</artifactId>
+            <version>${jnr.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <!--
+        MAVEN DEFAULT LIFECYCLE PHASES
+        validate                    Validate the project is correct and all necessary information is available.
+        initialize                  Initialize build state, e.g. set properties or create directories.
+        generate-sources            Generate any source code for inclusion in compilation.
+        process-sources             Process the source code, for example to filter any values.
+        generate-resources          Generate resources for inclusion in the package.
+        process-resources           Copy and process the resources into the destination directory, ready for packaging.
+        compile                     Compile the source code of the project.
+        process-classes             Post-process the generated files from compilation, for example to do bytecode
+                                    enhancement on Java classes.
+        generate-test-sources       Generate any test source code for inclusion in compilation.
+        process-test-sources        Process the test source code, for example to filter any values.
+        generate-test-resources     Create resources for testing.
+        process-test-resources      Copy and process the resources into the test destination directory.
+        test-compile                Compile the test source code into the test destination directory
+        process-test-classes        Post-process the generated files from test compilation, for example to do bytecode
+                                    enhancement on Java classes.
+        test                        Run tests using a suitable unit testing framework. These tests should not require
+                                    the code be packaged or deployed.
+        prepare-package             Perform any operations necessary to prepare a package before the actual packaging.
+                                    This often results in an unpacked, processed version of the package.
+        package                     Take the compiled code and package it in its distributable format, such as a JAR.
+        pre-integration-test        Perform actions required before integration tests are executed. This may involve
+                                    things such as setting up the required environment.
+        integration-test            Process and deploy the package if necessary into an environment where integration
+                                    tests can be run.
+        post-integration-test       Perform actions required after integration tests have been executed. This may include
+                                    cleaning up the environment.
+        verify                      Run any checks to verify the package is valid and meets quality criteria.
+        install                     Install the package into the local repository, for use as a dependency in other projects locally.
+        deploy                      Done in an integration or release environment, copies the final package to the remote
+                                    repository for sharing with other developers and projects.
+        -->
+        <plugins>
+            <!-- start of lifecycle invoked plugins -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>1.3.0</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>write-project-properties</goal>
+                        </goals>
+                        <configuration>
+                            <outputFile>${project.build.directory}/project.properties</outputFile>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-toolchains-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <toolchains>
+                        <jdk>
+                            <vendor>corretto</vendor>
+                            <version>${java.jdk.version}</version>
+                        </jdk>
+                    </toolchains>
+                </configuration>
+                <executions>
+                    <execution>
+                        <!-- binds to maven validate phase by default -->
+                        <goals>
+                            <goal>toolchain</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.6.2</version>
+                <executions>
+                    <execution>
+                        <!-- binds to maven validate phase by default -->
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireMavenVersion>
+                                    <version>3.9</version>
+                                </requireMavenVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>io.github.git-commit-id</groupId>
+                <artifactId>git-commit-id-maven-plugin</artifactId>
+                <version>9.0.2</version>
+                <configuration>
+                    <commitIdGenerationMode>full</commitIdGenerationMode>
+                    <dateFormatTimeZone>UTC</dateFormatTimeZone>
+                    <failOnNoGitDirectory>false</failOnNoGitDirectory>
+                    <failOnUnableToExtractRepoInfo>false</failOnUnableToExtractRepoInfo>
+                    <format>properties</format>
+                    <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                </configuration>
+                <executions>
+                    <execution>
+                        <!-- binds to maven initialize phase by default -->
+                        <goals>
+                            <goal>revision</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.jsonschema2pojo</groupId>
+                <artifactId>jsonschema2pojo-maven-plugin</artifactId>
+                <version>1.3.3</version>
+                <configuration>
+                    <annotationStyle>none</annotationStyle>
+                    <classNameSuffix>Config</classNameSuffix>
+                    <includeAdditionalProperties>true</includeAdditionalProperties>
+                    <includeGeneratedAnnotation>false</includeGeneratedAnnotation>
+                    <includeHashcodeAndEquals>false</includeHashcodeAndEquals>
+                    <includeJsr303Annotations>true</includeJsr303Annotations>
+                    <includeToString>false</includeToString>
+                    <outputDirectory>${project.basedir}/src/main/java</outputDirectory>
+                    <sourcePaths>
+                        <param>${project.basedir}/conf/schema/config.schema.yaml</param>
+                    </sourcePaths>
+                    <sourceType>yamlschema</sourceType>
+                    <targetVersion>${java.release.version}</targetVersion>
+                    <usePrimitives>true</usePrimitives>
+                </configuration>
+                <executions>
+                    <execution>
+                        <!-- binds to maven generate-sources phase by default -->
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.15.0</version>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                        <path>
+                            <groupId>com.github.stephanenicolas.toothpick</groupId>
+                            <artifactId>toothpick-compiler</artifactId>
+                            <version>${toothpick.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                    <compilerArgs>
+                    </compilerArgs>
+                    <encoding>UTF-8</encoding>
+                    <release>${java.release.version}</release>
+                </configuration>
+                <!--
+                does not need executions block, already bound to compile and test-compile phases
+                -->
+            </plugin>
+            <plugin>
+                <groupId>org.gaul</groupId>
+                <artifactId>modernizer-maven-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <javaVersion>${java.release.version}</javaVersion>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>modernizer</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.5.4</version>
+                <configuration>
+                    <runOrder>alphabetical</runOrder>
+                    <excludes>
+                    </excludes>
+                </configuration>
+                <!--
+                does not need executions block, already bound to test phase
+                -->
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.5.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                        </manifest>
+                    </archive>
+                </configuration>
+                <!--
+                does not need executions block, already bound to package phase
+                -->
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.6.1</version>
+                <configuration>
+                    <createDependencyReducedPom>false</createDependencyReducedPom>
+                    <finalName>${final.name}</finalName>
+                    <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                                <exclude>META-INF/*.SF</exclude>
+                                <exclude>META-INF/*.DSA</exclude>
+                                <exclude>META-INF/*.RSA</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
+                </configuration>
+                <executions>
+                    <execution>
+                        <!-- binds to maven package phase by default -->
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>dev.jeremywall.javaappservicesarchitectureexample.MainEntryPoint</mainClass>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.14</version>
+                <executions>
+                    <execution>
+                        <!-- binds to maven intialize phase by default -->
+                        <id>agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <!-- binds to maven verify phase by default -->
+                        <id>report</id>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- end of lifecycle invoked plugins -->
+
+            <!-- start of manually invoked plugins -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.10.0</version>
+            </plugin>
+            <plugin>
+                <!-- helpful plugin to view which maven plugins run at which phase of the build process -->
+                <groupId>fr.jcgay.maven.plugins</groupId>
+                <artifactId>buildplan-maven-plugin</artifactId>
+                <version>1.5</version>
+            </plugin>
+            <plugin>
+                <!-- helpful plugin to check for available updates of dependencies and plugins -->
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>2.21.0</version>
+                <configuration>
+                    <ruleSet>
+                        <ignoreVersions>
+                            <ignoreVersion>
+                                <!-- ignore versions with the milestone "M" or release candidate "RC" followed by numbers -->
+                                <type>regex</type>
+                                <version>.+-(M|RC)\d+.*</version>
+                            </ignoreVersion>
+                            <ignoreVersion>
+                                <!--
+                                ignore versions with:
+                                -alpha, -beta, or -android
+                                .alpha, .beta, or .android
+                                -->
+                                <type>regex</type>
+                                <version>.+(-|\.)(alpha|beta|android).*</version>
+                            </ignoreVersion>
+                        </ignoreVersions>
+                    </ruleSet>
+                </configuration>
+            </plugin>
+            <!-- end of manually invoked plugins -->
+        </plugins>
+        <extensions>
+        </extensions>
+    </build>
+</project>
