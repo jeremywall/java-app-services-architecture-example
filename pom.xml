@@ -46,7 +46,7 @@
         <hikaricp.version>7.0.2</hikaricp.version>
         <guava.version>33.5.0-jre</guava.version>
         <javax.validation.version>2.0.1.Final</javax.validation.version>
-        <jdbi.version>3.51.0</jdbi.version>
+        <jdbi.version>3.52.0</jdbi.version>
         <jnr.version>3.1.21</jnr.version>
         <json.org.version>20251224</json.org.version>
         <junit.jupiter.version>6.0.3</junit.jupiter.version>
